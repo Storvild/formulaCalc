@@ -1,8 +1,8 @@
-program Project1;
+program formulaCalc;
 
 uses
   Forms,
-  Unit1 in 'Unit1.pas' {Form1};
+  CalculatorU in 'CalculatorU.pas' {Form1};
 
 {$R *.res}
 

@@ -39,6 +39,18 @@ type
     BitBtn18: TBitBtn;
     OkB: TButton;
     ResultL: TLabel;
+    PopupMenu1: TPopupMenu;
+    MICommaToDot: TMenuItem;
+    MIAlwaysOnTop: TMenuItem;
+    N1: TMenuItem;
+    MIExit: TMenuItem;
+    MICompactMode: TMenuItem;
+    MICopy: TMenuItem;
+    MIPaste: TMenuItem;
+    MIClear: TMenuItem;
+    N2: TMenuItem;
+    HelpL: TLabel;
+    MIResetSettings: TMenuItem;
     procedure OkBClick(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
@@ -47,15 +59,33 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
+    procedure MIAlwaysOnTopClick(Sender: TObject);
+    procedure MICommaToDotClick(Sender: TObject);
+    procedure MICompactModeClick(Sender: TObject);
+    procedure MIExitClick(Sender: TObject);
+    procedure MICopyClick(Sender: TObject);
+    procedure MIPasteClick(Sender: TObject);
+    procedure MIClearClick(Sender: TObject);
+    procedure MIResetSettingsClick(Sender: TObject);
   private
     buttonsProps: array of TBtnPropRec;
     oldFormWidth: integer;
     oldFormHeight: integer;
-    SettingCommaToDot: boolean;
+    FSettingCommaToDot: boolean;
+    FSettingAlwaysOnTop: boolean;
+    FSettingCompactMode: boolean;
+    procedure SetSettingCommaToDot(const Value: boolean);
+    procedure SetSettingAlwaysOnTop(const Value: boolean);
+    procedure SetSettingCompactMode(const Value: boolean);
+    { Private declarations }
   public
     Value: Double;
     procedure SetValue(inval: Double);
     procedure RecalcLabel();
+    property SettingCommaToDot: boolean read FSettingCommaToDot write SetSettingCommaToDot;
+    property SettingAlwaysOnTop: boolean read FSettingAlwaysOnTop write SetSettingAlwaysOnTop;
+    property SettingCompactMode: boolean read FSettingCompactMode write SetSettingCompactMode;
+    { Public declarations }
   end;
 
 var
@@ -66,7 +96,7 @@ implementation
 
 {$R *.dfm}
 
-uses ActiveX, ComObj, Registry;
+uses ActiveX, ComObj, Registry, Clipbrd;
 
 function Recalc(intext: string): string;
 var
@@ -152,7 +182,9 @@ end;
 procedure TCalculatorF.FormCreate(Sender: TObject);
 var i: integer;
 begin
-  SettingCommaToDot := false;
+  SettingCommaToDot := true;
+  SettingAlwaysOnTop := false;
+  SettingCompactMode := false;
 
   oldFormWidth := Self.Width;
   oldFormHeight := Self.Height;
@@ -169,6 +201,11 @@ begin
       buttonsProps[High(buttonsProps)].Top := TButton(Self.Components[i]).Top;
     end;
   end;
+
+  HelpL.ShowHint := true;
+  Application.HintHidePause := 30000; //Время показа хинта 30сек
+  HelpL.Hint := 'Пример: (1+2)/(3*2)^2'+#13#10;
+
 end;
 
 procedure TCalculatorF.RecalcLabel;
@@ -184,6 +221,90 @@ end;
 procedure TCalculatorF.Edit1Change(Sender: TObject);
 begin
   RecalcLabel();
+end;
+
+procedure TCalculatorF.MIAlwaysOnTopClick(Sender: TObject);
+begin
+  SettingAlwaysOnTop := not SettingAlwaysOnTop;
+end;
+
+procedure TCalculatorF.MICommaToDotClick(Sender: TObject);
+begin
+  SettingCommaToDot := not SettingCommaToDot;
+end;
+
+procedure TCalculatorF.MICompactModeClick(Sender: TObject);
+begin
+  SettingCompactMode := not SettingCompactMode;
+end;
+
+
+procedure TCalculatorF.SetSettingAlwaysOnTop(const Value: boolean);
+begin
+  FSettingAlwaysOnTop := Value;
+  MIAlwaysOnTop.Checked := FSettingAlwaysOnTop;
+  if SettingAlwaysOnTop then
+    Self.FormStyle := fsStayOnTop
+  else
+    Self.FormStyle := fsNormal;
+end;
+
+procedure TCalculatorF.SetSettingCommaToDot(const Value: boolean);
+begin
+  FSettingCommaToDot := Value;
+  MICommaToDot.Checked:= FSettingCommaToDot;
+end;
+
+procedure TCalculatorF.SetSettingCompactMode(const Value: boolean);
+var i: integer;
+begin
+  FSettingCompactMode := Value;
+  MICompactMode.Checked := FSettingCompactMode;
+  for i:=0 to Self.ComponentCount-1 do
+  begin
+    if (Self.Components[i].ClassName = 'TBitBtn') or (Self.Components[i].ClassName = 'TButton') then
+      TButton(Self.Components[i]).Visible := not Value;
+  end;
+
+  if FSettingCompactMode then
+  begin
+    Self.ClientHeight := ResultL.Top + ResultL.Height + 10;
+  end
+  else
+  begin
+    Self.ClientHeight := 200;
+  end;
+end;
+
+procedure TCalculatorF.MIExitClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TCalculatorF.MICopyClick(Sender: TObject);
+begin
+  //Edit1.SelectAll;
+  //Edit1.CopyToClipboard;
+  Clipboard.AsText := Edit1.Text;
+end;
+
+procedure TCalculatorF.MIPasteClick(Sender: TObject);
+begin
+  //Edit1.PasteFromClipboard;
+  Edit1.Text := Clipboard.AsText;
+end;
+
+procedure TCalculatorF.MIClearClick(Sender: TObject);
+begin
+  Edit1.Clear;
+end;
+
+procedure TCalculatorF.MIResetSettingsClick(Sender: TObject);
+var Reg: TRegistry;
+begin
+  SettingCommaToDot := true;
+  SettingAlwaysOnTop := false;
+  SettingCompactMode := false;
 end;
 
 end.

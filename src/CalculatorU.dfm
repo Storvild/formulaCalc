@@ -2,7 +2,7 @@ object CalculatorF: TCalculatorF
   Left = 192
   Top = 146
   Width = 171
-  Height = 234
+  Height = 236
   Caption = 'CalculatorF'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,23 +11,39 @@ object CalculatorF: TCalculatorF
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  PopupMenu = PopupMenu1
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (
     153
-    189)
+    191)
   PixelsPerInch = 120
   TextHeight = 16
   object ResultL: TLabel
     Left = 9
     Top = 36
-    Width = 136
+    Width = 126
     Height = 16
     Anchors = [akLeft, akTop, akRight]
     AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = cl3DDkShadow
     Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object HelpL: TLabel
+    Left = 138
+    Top = 36
+    Width = 14
+    Height = 17
+    Anchors = [akTop, akRight]
+    AutoSize = False
+    Caption = '?'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = cl3DDkShadow
+    Font.Height = -12
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -219,5 +235,47 @@ object CalculatorF: TCalculatorF
     Caption = #1054#1050
     TabOrder = 19
     OnClick = OkBClick
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 8
+    Top = 152
+    object MICommaToDot: TMenuItem
+      Caption = #1047#1072#1084#1077#1085#1103#1090#1100' '#1079#1072#1087#1103#1090#1091#1102' '#1085#1072' '#1090#1086#1095#1082#1091
+      OnClick = MICommaToDotClick
+    end
+    object MIAlwaysOnTop: TMenuItem
+      Caption = #1042#1089#1077#1075#1076#1072' '#1085#1072' '#1101#1082#1088#1072#1085#1077
+      OnClick = MIAlwaysOnTopClick
+    end
+    object MICompactMode: TMenuItem
+      Caption = #1050#1086#1084#1087#1072#1082#1090#1085#1099#1081' '#1074#1080#1076
+      OnClick = MICompactModeClick
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object MICopy: TMenuItem
+      Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
+      OnClick = MICopyClick
+    end
+    object MIPaste: TMenuItem
+      Caption = #1042#1089#1090#1072#1074#1080#1090#1100
+      OnClick = MIPasteClick
+    end
+    object MIClear: TMenuItem
+      Caption = #1054#1095#1080#1089#1090#1080#1090#1100
+      OnClick = MIClearClick
+    end
+    object MIResetSettings: TMenuItem
+      Caption = #1057#1073#1088#1086#1089#1080#1090#1100' '#1085#1072#1089#1090#1088#1086#1081#1082#1080
+      OnClick = MIResetSettingsClick
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object MIExit: TMenuItem
+      Caption = #1042#1099#1093#1086#1076
+      OnClick = MIExitClick
+    end
   end
 end

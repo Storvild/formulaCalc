@@ -39,6 +39,7 @@ object CalculatorF: TCalculatorF
     Top = 36
     Width = 14
     Height = 17
+    Cursor = crHandPoint
     Anchors = [akTop, akRight]
     AutoSize = False
     Caption = '?'
@@ -48,6 +49,7 @@ object CalculatorF: TCalculatorF
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    OnClick = HelpLClick
   end
   object Edit1: TEdit
     Left = 8

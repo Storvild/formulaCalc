@@ -68,6 +68,7 @@ type
     procedure MIClearClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MIResetSettingsClick(Sender: TObject);
+    procedure HelpLClick(Sender: TObject);
   private
     buttonsProps: array of TBtnPropRec;
     oldFormWidth: integer;
@@ -97,7 +98,7 @@ implementation
 
 {$R *.dfm}
 
-uses ActiveX, ComObj, Registry, Clipbrd;
+uses ActiveX, ComObj, Registry, Clipbrd, HelpFormulasU;
 
 function Recalc(intext: string): string;
 var
@@ -348,6 +349,11 @@ begin
   //Reg.CloseKey;
   //Reg.Free;
 
+end;
+
+procedure TCalculatorF.HelpLClick(Sender: TObject);
+begin
+  HelpFormulasF.Show;
 end;
 
 end.

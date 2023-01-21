@@ -12,6 +12,7 @@ object CalculatorF: TCalculatorF
   Font.Style = []
   OldCreateOrder = False
   PopupMenu = PopupMenu1
+  OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
   DesignSize = (

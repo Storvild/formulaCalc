@@ -66,6 +66,7 @@ type
     procedure MICopyClick(Sender: TObject);
     procedure MIPasteClick(Sender: TObject);
     procedure MIClearClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MIResetSettingsClick(Sender: TObject);
   private
     buttonsProps: array of TBtnPropRec;
@@ -181,10 +182,31 @@ end;
 
 procedure TCalculatorF.FormCreate(Sender: TObject);
 var i: integer;
+    b: boolean;
+    Reg: TRegistry;
 begin
+  // Параметры по умолчанию
   SettingCommaToDot := true;
   SettingAlwaysOnTop := false;
   SettingCompactMode := false;
+
+  // Загрузка параметров из реестра
+  Reg := TRegistry.Create(); //KEY_READ
+  Reg.RootKey := HKEY_CURRENT_USER;
+  b := Reg.OpenKey('Software\VSSoft\formulaCalc', true);
+  //if not b then
+  //  ShowMessage('Ошибка работы с реестром');
+  try
+    SettingCommaToDot := Reg.ReadBool('CommaToDot');
+    SettingAlwaysOnTop := Reg.ReadBool('AlwaysOnTop');
+    SettingCompactMode := Reg.ReadBool('CompactMode');
+    //if Reg.KeyExists('FormWidth')=True then
+    //self.Width := Reg.ReadInteger('FormWidth');
+    //self.Height := Reg.ReadInteger('FormHeight');
+  except
+  end;
+  Reg.CloseKey; // Запись и закрытие реестра
+  Reg.Free;
 
   oldFormWidth := Self.Width;
   oldFormHeight := Self.Height;
@@ -283,14 +305,11 @@ end;
 
 procedure TCalculatorF.MICopyClick(Sender: TObject);
 begin
-  //Edit1.SelectAll;
-  //Edit1.CopyToClipboard;
   Clipboard.AsText := Edit1.Text;
 end;
 
 procedure TCalculatorF.MIPasteClick(Sender: TObject);
 begin
-  //Edit1.PasteFromClipboard;
   Edit1.Text := Clipboard.AsText;
 end;
 
@@ -299,12 +318,36 @@ begin
   Edit1.Clear;
 end;
 
+procedure TCalculatorF.FormClose(Sender: TObject; var Action: TCloseAction);
+var Reg: TRegistry;
+begin
+  // Запись параметров в реестр
+  Reg := TRegistry.Create;
+  Reg.RootKey := HKEY_CURRENT_USER;
+  Reg.OpenKey('Software\VSSoft\formulaCalc', true);
+  Reg.WriteBool('CommaToDot', SettingCommaToDot);
+  Reg.WriteBool('AlwaysOnTop', SettingAlwaysOnTop);
+  Reg.WriteBool('CompactMode', SettingCompactMode);
+  //Reg.WriteInteger('FormWidth', self.Width);
+  //Reg.WriteInteger('FormHeight', self.Height);
+  Reg.CloseKey;
+  Reg.Free;
+end;
+
 procedure TCalculatorF.MIResetSettingsClick(Sender: TObject);
 var Reg: TRegistry;
 begin
   SettingCommaToDot := true;
   SettingAlwaysOnTop := false;
   SettingCompactMode := false;
+  Self.Width := 171;
+  Self.Height := 236;
+  //Reg := TRegistry.Create;
+  //Reg.RootKey := HKEY_CURRENT_USER;
+  //Reg.DeleteKey('Software\VSSoft\formulaCalc');
+  //Reg.CloseKey;
+  //Reg.Free;
+
 end;
 
 end.

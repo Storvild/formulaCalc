@@ -1,9 +1,9 @@
-object Form1: TForm1
-  Left = 825
-  Top = 341
-  Width = 176
-  Height = 233
-  Caption = 'Form1'
+object CalculatorF: TCalculatorF
+  Left = 192
+  Top = 146
+  Width = 171
+  Height = 234
+  Caption = 'CalculatorF'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,13 +11,33 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnResize = FormResize
+  DesignSize = (
+    153
+    189)
   PixelsPerInch = 120
   TextHeight = 16
+  object ResultL: TLabel
+    Left = 9
+    Top = 36
+    Width = 136
+    Height = 16
+    Anchors = [akLeft, akTop, akRight]
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = cl3DDkShadow
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object Edit1: TEdit
     Left = 8
     Top = 8
     Width = 138
     Height = 29
+    Anchors = [akLeft, akTop, akRight]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -17
@@ -25,11 +45,13 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    OnChange = Edit1Change
     OnKeyPress = Edit1KeyPress
+    OnKeyUp = Edit1KeyUp
   end
   object BitBtn1: TBitBtn
     Left = 8
-    Top = 48
+    Top = 53
     Width = 25
     Height = 25
     Caption = '7'
@@ -38,7 +60,7 @@ object Form1: TForm1
   end
   object BitBtn2: TBitBtn
     Left = 32
-    Top = 48
+    Top = 53
     Width = 25
     Height = 25
     Caption = '8'
@@ -47,7 +69,7 @@ object Form1: TForm1
   end
   object BitBtn3: TBitBtn
     Left = 56
-    Top = 48
+    Top = 53
     Width = 25
     Height = 25
     Caption = '9'
@@ -56,7 +78,7 @@ object Form1: TForm1
   end
   object BitBtn4: TBitBtn
     Left = 88
-    Top = 48
+    Top = 53
     Width = 25
     Height = 25
     Caption = '+'
@@ -65,7 +87,7 @@ object Form1: TForm1
   end
   object BitBtn5: TBitBtn
     Left = 56
-    Top = 72
+    Top = 77
     Width = 25
     Height = 25
     Caption = '6'
@@ -74,7 +96,7 @@ object Form1: TForm1
   end
   object BitBtn6: TBitBtn
     Left = 8
-    Top = 72
+    Top = 77
     Width = 25
     Height = 25
     Caption = '4'
@@ -83,7 +105,7 @@ object Form1: TForm1
   end
   object BitBtn7: TBitBtn
     Left = 32
-    Top = 72
+    Top = 77
     Width = 25
     Height = 25
     Caption = '5'
@@ -92,7 +114,7 @@ object Form1: TForm1
   end
   object BitBtn8: TBitBtn
     Left = 56
-    Top = 96
+    Top = 101
     Width = 25
     Height = 25
     Caption = '3'
@@ -101,7 +123,7 @@ object Form1: TForm1
   end
   object BitBtn9: TBitBtn
     Left = 8
-    Top = 96
+    Top = 101
     Width = 25
     Height = 25
     Caption = '1'
@@ -110,7 +132,7 @@ object Form1: TForm1
   end
   object BitBtn10: TBitBtn
     Left = 32
-    Top = 96
+    Top = 101
     Width = 25
     Height = 25
     Caption = '2'
@@ -119,7 +141,7 @@ object Form1: TForm1
   end
   object BitBtn11: TBitBtn
     Left = 88
-    Top = 72
+    Top = 77
     Width = 25
     Height = 25
     Caption = '-'
@@ -128,7 +150,7 @@ object Form1: TForm1
   end
   object BitBtn12: TBitBtn
     Left = 88
-    Top = 96
+    Top = 101
     Width = 25
     Height = 25
     Caption = '/'
@@ -137,7 +159,7 @@ object Form1: TForm1
   end
   object BitBtn13: TBitBtn
     Left = 8
-    Top = 120
+    Top = 125
     Width = 49
     Height = 25
     Caption = '0'
@@ -146,7 +168,7 @@ object Form1: TForm1
   end
   object BitBtn14: TBitBtn
     Left = 56
-    Top = 120
+    Top = 125
     Width = 25
     Height = 25
     Caption = '.'
@@ -155,7 +177,7 @@ object Form1: TForm1
   end
   object BitBtn15: TBitBtn
     Left = 120
-    Top = 96
+    Top = 101
     Width = 25
     Height = 49
     Caption = '='
@@ -164,7 +186,7 @@ object Form1: TForm1
   end
   object BitBtn16: TBitBtn
     Left = 88
-    Top = 120
+    Top = 125
     Width = 25
     Height = 25
     Caption = '*'
@@ -173,7 +195,7 @@ object Form1: TForm1
   end
   object BitBtn17: TBitBtn
     Left = 120
-    Top = 48
+    Top = 53
     Width = 25
     Height = 25
     Caption = #1057
@@ -182,7 +204,7 @@ object Form1: TForm1
   end
   object BitBtn18: TBitBtn
     Left = 120
-    Top = 72
+    Top = 77
     Width = 25
     Height = 25
     Caption = '<='
@@ -190,9 +212,9 @@ object Form1: TForm1
     OnClick = BitBtn1Click
   end
   object OkB: TButton
-    Left = 72
-    Top = 152
-    Width = 75
+    Left = 88
+    Top = 157
+    Width = 57
     Height = 25
     Caption = #1054#1050
     TabOrder = 19

@@ -14,6 +14,7 @@ object CalculatorF: TCalculatorF
   PopupMenu = PopupMenu1
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseDown = FormMouseDown
   OnResize = FormResize
   DesignSize = (
     153
@@ -33,6 +34,7 @@ object CalculatorF: TCalculatorF
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    OnMouseDown = FormMouseDown
   end
   object HelpL: TLabel
     Left = 138

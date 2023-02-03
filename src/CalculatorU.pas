@@ -69,6 +69,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MIResetSettingsClick(Sender: TObject);
     procedure HelpLClick(Sender: TObject);
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     buttonsProps: array of TBtnPropRec;
     oldFormWidth: integer;
@@ -354,6 +356,14 @@ end;
 procedure TCalculatorF.HelpLClick(Sender: TObject);
 begin
   HelpFormulasF.Show;
+end;
+
+procedure TCalculatorF.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+const
+  SC_DragMove = $F012; 
+begin
+  ReleaseCapture;    CalculatorF.perform(WM_SysCommand,SC_DragMove,0); 
 end;
 
 end.
